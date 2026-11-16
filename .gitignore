@@ -1,0 +1,13 @@
+.vscode/
+*.o
+*.d
+zappy_server
+zappy_gui
+zappy_ai
+zappy_assets
+# Python caches
+__pycache__/
+*.pyc
+
+# Assets GUI locaux (trop lourds pour git, servis par le CDN)
+gui/assets/

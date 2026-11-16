@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GUI dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y \
+            g++ make libsfml-dev libglew-dev libglm-dev libx11-dev
+
+      - name: Install GUI header-only libs
+        run: ./gui/scripts/setup_libs.sh
+
+      - name: Build server
+        run: make server
+
+      - name: Check zappy_server exists
+        run: test -f server/zappy_server && echo "zappy_server OK"
+
+      - name: Build GUI
+        run: make gui
+
+      - name: Check zappy_gui exists
+        run: test -f gui/zappy_gui && echo "zappy_gui OK"
+
+      - name: Check zappy_ai exists
+        run: test -f ai/zappy_ai && echo "zappy_ai OK"
